@@ -5,11 +5,13 @@ import { useEffect } from "react";
 
 import { ThemeProvider } from "../src/themeCtx";
 
-import { View } from "react-native";
-
-import ThemedView from "../src/components/styled/themedView";
+import { AuthProvider } from "../src/authCtx";
 
 import Header from "../src/components/header";
+
+import { SafeAreaProvider } from "react-native-safe-area-context";
+
+import ThemedSafeView from "../src/components/styled/themedSafeView";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -34,13 +36,15 @@ export default function RootLayout() {
     }
 
     return (
-        <ThemeProvider>
-            <ThemedView style={{ flex: 1 }}>
-                <View style={{ flex: 1, padding: 15 }}>
-                    <Header />
-                    <Slot />
-                </View>
-            </ThemedView>
-        </ThemeProvider>
+        <AuthProvider>
+            <SafeAreaProvider>
+                <ThemeProvider>
+                    <ThemedSafeView style={{ flex: 1, padding: 15 }}>
+                        <Header />
+                        <Slot />
+                    </ThemedSafeView>
+                </ThemeProvider>
+            </SafeAreaProvider>
+        </AuthProvider>
     );
 }

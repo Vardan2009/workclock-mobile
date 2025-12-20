@@ -1,17 +1,14 @@
-import { useStyles } from "../src/globalStyle";
+import { Redirect } from "expo-router";
+import { useAuth } from "../src/authCtx";
 
-import ThemeSelector from "../src/components/themeSelector";
+export default function Index() {
+    const { isAuthenticated, isLoading } = useAuth();
 
-import ThemedView from "../src/components/styled/themedView";
-import ThemedText from "../src/components/styled/themedText";
+    if (isLoading) return null;
 
-export default function HomeScreen() {
-    const styles = useStyles();
+    if (isAuthenticated) {
+        return <Redirect href="/(protected)" />;
+    }
 
-    return (
-        <ThemedView style={styles.page}>
-            <ThemedText style={styles.text}>Hello</ThemedText>
-            <ThemeSelector />
-        </ThemedView>
-    );
+    return <Redirect href="/(auth)/login" />;
 }

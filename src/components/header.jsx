@@ -5,12 +5,36 @@ import WorkClockWhiteLogo from "../../assets/workclock-white.png";
 
 import ThemedView from "./styled/themedView";
 
+import ThemedText from "./styled/themedText";
+
+import { useAuth } from "../authCtx";
+
+import { LogoutButton } from "./logoutBtn";
+
 export default function Header() {
     const styles = useStyles();
 
+    const { isAuthenticated, isLoading } = useAuth();
+
     return (
-        <ThemedView>
-            <Image source={WorkClockWhiteLogo} style={styles.logo} />
+        <ThemedView
+            style={{
+                marginBottom: 30,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+            }}
+        >
+            <Image
+                source={WorkClockWhiteLogo}
+                style={[styles.logo, { marginRight: 10 }]}
+            />
+            {isAuthenticated && (
+                <>
+                    <ThemedText>username</ThemedText>
+                    <LogoutButton />
+                </>
+            )}
         </ThemedView>
     );
 }

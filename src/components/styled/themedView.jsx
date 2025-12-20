@@ -1,13 +1,8 @@
-import { SafeAreaView } from "react-native";
 import { useTheme } from "../../themeCtx";
+import { View } from "react-native";
 
 export default function ThemedView({ style, ...props }) {
     const { theme } = useTheme();
 
-    return (
-        <SafeAreaView
-            style={[{ backgroundColor: theme.bg }, style]}
-            {...props}
-        />
-    );
+    return <View style={[{ backgroundColor: theme.bg }, style]} {...props} />;
 }
