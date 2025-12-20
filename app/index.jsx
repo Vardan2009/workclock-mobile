@@ -1,26 +1,17 @@
-import { StyleSheet, Text, View } from "react-native";
+import { useStyles } from "../src/globalStyle";
 
-export default function Home() {
+import ThemeSelector from "../src/components/themeSelector";
+
+import ThemedView from "../src/components/styled/themedView";
+import ThemedText from "../src/components/styled/themedText";
+
+export default function HomeScreen() {
+    const styles = useStyles();
+
     return (
-        <View style={styles.container}>
-            <Text style={styles.customText}>This is my custom font!</Text>
-            <Text style={styles.boldText}>This is the bold version!</Text>
-        </View>
+        <ThemedView style={styles.page}>
+            <ThemedText style={styles.text}>Hello</ThemedText>
+            <ThemeSelector />
+        </ThemedView>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    customText: {
-        fontFamily: "BrandFont-Regular",
-        fontSize: 20,
-    },
-    boldText: {
-        fontFamily: "BrandFont-Bold",
-        fontSize: 20,
-    },
-});
