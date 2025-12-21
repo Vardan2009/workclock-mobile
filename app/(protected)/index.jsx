@@ -1,7 +1,5 @@
 import { useStyles } from "../../src/globalStyle";
 
-import ThemeSelector from "../../src/components/themeSelector";
-
 import ThemedView from "../../src/components/styled/themedView";
 import ThemedText from "../../src/components/styled/themedText";
 
@@ -71,7 +69,6 @@ export default function HomeScreen() {
                             <TaskCard key={task.id} task={task} />
                         ))}
                     </ScrollView>
-                    <ThemeSelector />
                 </>
             )}
             {!(user && tasks) && <ThemedText>Please wait...</ThemedText>}

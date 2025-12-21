@@ -13,6 +13,7 @@ export const themes = {
         dangerHover: "#e63b3b",
 
         barStyle: "dark-content",
+        keyboardAppearance: "light",
     },
     dark: {
         emoji: "🌙",
@@ -28,6 +29,7 @@ export const themes = {
         dangerHover: "#ff5252",
 
         barStyle: "light-content",
+        keyboardAppearance: "dark",
     },
     forest: {
         emoji: "🌳",
@@ -43,6 +45,7 @@ export const themes = {
         dangerHover: "#b53a3a",
 
         barStyle: "dark-content",
+        keyboardAppearance: "light",
     },
     ocean: {
         emoji: "🌊",
@@ -58,6 +61,7 @@ export const themes = {
         dangerHover: "#c94444",
 
         barStyle: "dark-content",
+        keyboardAppearance: "light",
     },
     sunset: {
         emoji: "🌅",
@@ -73,6 +77,7 @@ export const themes = {
         dangerHover: "#bf3737",
 
         barStyle: "dark-content",
+        keyboardAppearance: "light",
     },
     nord: {
         emoji: "❄️",
@@ -88,5 +93,6 @@ export const themes = {
         dangerHover: "#a54e56",
 
         barStyle: "light-content",
+        keyboardAppearance: "dark",
     },
 };
