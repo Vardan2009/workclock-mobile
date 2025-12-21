@@ -10,7 +10,8 @@ import { api } from "../api/client";
 
 import { useTasks } from "../task";
 import { useEffect, useState } from "react";
-import { useEvent } from "expo";
+
+import { useRef } from "react";
 
 function formatSecondsToHMS(totalSeconds) {
     if (isNaN(totalSeconds)) return "N/A";
@@ -42,7 +43,7 @@ export default function TaskCard({ task }) {
     const [runningEstDuration, setRunningEstDuration] = useState(0);
     const [runningElapsedTime, setRunningElapsedTime] = useState(0);
 
-    let interval = null;
+    const intervalRef = useRef(null);
 
     const handleDelete = async () => {
         setBeingDeleted(true);
@@ -65,7 +66,9 @@ export default function TaskCard({ task }) {
         checkRunningInstance();
 
         return () => {
-            if (interval) clearInterval(interval);
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current);
+            }
         };
     }, []);
 
@@ -84,8 +87,12 @@ export default function TaskCard({ task }) {
     };
 
     const stopInstance = async () => {
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+        }
+
         await api.post(`/tasks/${task.id}/instances/stop`);
-        clearInterval(interval);
         setRunning(false);
         setRunningEstDuration(0);
         setRunningElapsedTime(0);
@@ -93,11 +100,13 @@ export default function TaskCard({ task }) {
     };
 
     const startTimer = () => {
-        if (interval) clearInterval(interval);
-        interval = setInterval(async () => {
-            const data = await api.get(`/tasks/${task.id}/instances/elapsed`);
-            setRunningElapsedTime(data.data.elapsed_sec);
-        });
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+        }
+
+        intervalRef.current = setInterval(() => {
+            setRunningElapsedTime((p) => p + 1);
+        }, 1000);
     };
 
     return (
@@ -121,7 +130,7 @@ export default function TaskCard({ task }) {
                 }}
             >
                 <ThemedText style={styles.subtitle}>
-                    {task.icon} {task.title}
+                    {task.icon} {task.title} ({task.id})
                 </ThemedText>
                 <ThemedButton
                     onPress={handleDelete}

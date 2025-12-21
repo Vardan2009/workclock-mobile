@@ -5,6 +5,8 @@ import ThemeSelector from "../../src/components/themeSelector";
 import ThemedView from "../../src/components/styled/themedView";
 import ThemedText from "../../src/components/styled/themedText";
 
+import ThemedButton from "../../src/components/styled/themedButton";
+
 import TaskCard from "../../src/components/taskCard";
 
 import { ScrollView } from "react-native";
@@ -14,6 +16,8 @@ import { getUser } from "../../src/api/protected";
 import { useTasks } from "../../src/task";
 
 import { useEffect, useState } from "react";
+
+import { api } from "../../src/api/client";
 
 export default function HomeScreen() {
     const styles = useStyles();
@@ -38,6 +42,19 @@ export default function HomeScreen() {
         loadTasks();
     }, []);
 
+    const [creatingTask, setCreatingTask] = useState(false);
+
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+    const handleNewTask = async () => {
+        if (creatingTask) return;
+        setCreatingTask(true);
+        await api.post(`/tasks`, { title: "New Task", icon: "W" });
+        await sleep(300);
+        await loadTasks();
+        setCreatingTask(false);
+    };
+
     return (
         <>
             {user && tasks && (
@@ -48,9 +65,16 @@ export default function HomeScreen() {
 
                     <ThemedText style={styles.subtitle}>Your tasks</ThemedText>
 
+                    <ThemedButton
+                        onPress={handleNewTask}
+                        disabled={creatingTask}
+                    >
+                        + New Task
+                    </ThemedButton>
+
                     <ScrollView>
-                        {tasks.map((task, index) => (
-                            <TaskCard key={index} task={task} />
+                        {tasks.map((task) => (
+                            <TaskCard key={task.id} task={task} />
                         ))}
                     </ScrollView>
 
