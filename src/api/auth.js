@@ -3,7 +3,6 @@ import * as SecureStore from "expo-secure-store";
 
 export async function register(username, password) {
     const res = await api.post("/register", { username, password });
-    await SecureStore.setItemAsync("access_token", res.data.access_token);
     return res.data;
 }
 

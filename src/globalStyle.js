@@ -44,12 +44,20 @@ export function useStyles() {
                     borderWidth: 1,
                     borderColor: "transparent",
                 },
-                buttonPressed: {
+                buttonOutline: {
                     backgroundColor: "transparent",
                     borderColor: theme.accent1,
                 },
-                buttonDisabled: {
+                buttonOutlineText: {
+                    color: theme.accent1,
+                },
+                buttonPressed: {
+                    backgroundColor: "transparent",
+                    borderColor: theme.accent1,
                     opacity: 0.5,
+                },
+                buttonDisabled: {
+                    opacity: 0.3,
                 },
                 buttonText: {
                     fontFamily: "BrandFont-Regular",
@@ -58,6 +66,15 @@ export function useStyles() {
                 },
                 buttonPressedText: {
                     color: theme.accent1,
+                },
+                input: {
+                    fontFamily: "BrandFont-Regular",
+                    fontSize: 24,
+                    padding: 15,
+                    marginVertical: 10,
+                    backgroundColor: theme.bgAlt,
+                    outlineColor: theme.accent1,
+                    color: theme.fg,
                 },
             }),
         [theme],

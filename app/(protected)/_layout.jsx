@@ -1,4 +1,4 @@
-import { Redirect, Slot } from "expo-router";
+import { Redirect, Stack } from "expo-router";
 import { useAuth } from "../../src/authCtx";
 
 import { TasksProvider } from "../../src/task";
@@ -14,7 +14,13 @@ export default function ProtectedLayout() {
 
     return (
         <TasksProvider>
-            <Slot />
+            <Stack
+                screenOptions={{
+                    headerShown: false,
+                    animation: "fade",
+                    gestureEnabled: false,
+                }}
+            ></Stack>
         </TasksProvider>
     );
 }

@@ -9,6 +9,8 @@ import { useAuth } from "../authCtx";
 
 import { LogoutButton } from "./logoutBtn";
 
+import { StatusBar } from "react-native";
+
 export default function Header() {
     const styles = useStyles();
 
@@ -23,11 +25,13 @@ export default function Header() {
                 justifyContent: "space-between",
             }}
         >
+            <StatusBar barStyle={useStyles().barStyle} />
+
             <Image
                 source={WorkClockWhiteLogo}
                 style={[styles.logo, { marginRight: 10 }]}
             />
-            {isAuthenticated && (
+            {isAuthenticated && !isLoading && (
                 <>
                     <LogoutButton />
                 </>

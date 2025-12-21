@@ -130,7 +130,7 @@ export default function TaskCard({ task }) {
                 }}
             >
                 <ThemedText style={styles.subtitle}>
-                    {task.icon} {task.title} ({task.id})
+                    {task.icon} {task.title}
                 </ThemedText>
                 <ThemedButton
                     onPress={handleDelete}

@@ -1,4 +1,4 @@
-import { login as apiLogin } from "../../src/api/auth";
+import { register as apiRegister } from "../../src/api/auth";
 import { useAuth } from "../../src/authCtx";
 import { useRouter } from "expo-router";
 
@@ -23,8 +23,7 @@ const formatString = (str) => {
     return noSpaceStr.replace(/[^a-zA-Z0-9\\s]/g, "");
 };
 
-export default function Login() {
-    const { login } = useAuth();
+export default function Register() {
     const { theme } = useTheme();
 
     const styles = useStyles();
@@ -41,22 +40,21 @@ export default function Login() {
     const handleLogin = async () => {
         setLoginState(true);
         setError(null);
-        const data = await apiLogin(username, password);
+        const data = await apiRegister(username, password);
         setLoginState(false);
         if (data.error) {
             setError(data.error);
             return;
         }
-        login();
-        router.replace("/(protected)");
+        router.replace("/(auth)/login");
     };
 
     return (
         <ThemedView>
-            <ThemedText style={styles.title}>Log in</ThemedText>
-            <Pressable onPress={() => router.push(`/(auth)/register`)}>
+            <ThemedText style={styles.title}>Register</ThemedText>
+            <Pressable onPress={() => router.push(`/(auth)/login`)}>
                 <ThemedText style={{ color: theme.accent1 }}>
-                    No account? Register
+                    Already have an account? Log in
                 </ThemedText>
             </Pressable>
 
@@ -78,7 +76,7 @@ export default function Login() {
                 onPress={handleLogin}
                 disabled={loggingIn}
             >
-                Log in
+                Register
             </ThemedButton>
             {error && <ThemedText>{error}</ThemedText>}
         </ThemedView>

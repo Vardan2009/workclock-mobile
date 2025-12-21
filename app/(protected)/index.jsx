@@ -17,7 +17,11 @@ import { useTasks } from "../../src/task";
 
 import { useEffect, useState } from "react";
 
-import { api } from "../../src/api/client";
+import { router } from "expo-router";
+
+import { useFocusEffect } from "expo-router";
+
+import { useCallback } from "react";
 
 export default function HomeScreen() {
     const styles = useStyles();
@@ -25,64 +29,53 @@ export default function HomeScreen() {
     const [user, setUser] = useState(null);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const u = await getUser();
-
-            if (u.error) setError(u.error);
-
-            setUser(u);
-        };
-        fetchData();
-    }, []);
-
     const { tasks, loadTasks } = useTasks();
 
-    useEffect(() => {
-        loadTasks();
-    }, []);
+    useFocusEffect(
+        useCallback(() => {
+            const fetchUserData = async () => {
+                const u = await getUser();
 
-    const [creatingTask, setCreatingTask] = useState(false);
+                if (u.error) setError(u.error);
 
-    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+                setUser(u);
+            };
 
-    const handleNewTask = async () => {
-        if (creatingTask) return;
-        setCreatingTask(true);
-        await api.post(`/tasks`, { title: "New Task", icon: "W" });
-        await sleep(300);
-        await loadTasks();
-        setCreatingTask(false);
-    };
+            fetchUserData();
+            loadTasks();
+        }, []),
+    );
+
+    // useEffect(() => {
+    //     fetchUserData();
+    //     loadTasks();
+    // }, []);
 
     return (
-        <>
+        <ThemedView style={styles.page}>
             {user && tasks && (
-                <ThemedView style={styles.page}>
+                <>
                     <ThemedText style={styles.title}>
                         Hello, {user.username}!
                     </ThemedText>
-
                     <ThemedText style={styles.subtitle}>Your tasks</ThemedText>
-
                     <ThemedButton
-                        onPress={handleNewTask}
-                        disabled={creatingTask}
+                        onPress={() => {
+                            router.push(`/(protected)/newTask`);
+                        }}
                     >
                         + New Task
                     </ThemedButton>
-
                     <ScrollView>
                         {tasks.map((task) => (
                             <TaskCard key={task.id} task={task} />
                         ))}
                     </ScrollView>
-
                     <ThemeSelector />
-                </ThemedView>
+                </>
             )}
             {!(user && tasks) && <ThemedText>Please wait...</ThemedText>}
             {error && <ThemedText>An error occured: {error}</ThemedText>}
-        </>
+        </ThemedView>
     );
 }

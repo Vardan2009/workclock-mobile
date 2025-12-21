@@ -11,6 +11,7 @@ export default function ThemedButton({
     onPress,
     disabled,
     style,
+    textStyle,
     ...props
 }) {
     const styles = useStyles();
@@ -38,6 +39,7 @@ export default function ThemedButton({
             <ThemedText
                 style={[
                     styles.buttonText,
+                    textStyle,
                     (isPressed || disabled) && styles.buttonPressedText,
                 ]}
             >
