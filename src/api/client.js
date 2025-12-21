@@ -25,6 +25,7 @@ api.interceptors.response.use(
     (res) => res,
     async (error) => {
         if (error.response?.status === 401) {
+            console.error("401 unauth");
             await SecureStore.deleteItemAsync("access_token");
             router.replace("/(auth)/login");
         }

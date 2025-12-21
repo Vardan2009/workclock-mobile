@@ -1,6 +1,8 @@
 import { Redirect, Slot } from "expo-router";
 import { useAuth } from "../../src/authCtx";
 
+import { TasksProvider } from "../../src/task";
+
 export default function ProtectedLayout() {
     const { isAuthenticated, isLoading } = useAuth();
 
@@ -10,5 +12,9 @@ export default function ProtectedLayout() {
         return <Redirect href="/(auth)/login" />;
     }
 
-    return <Slot />;
+    return (
+        <TasksProvider>
+            <Slot />
+        </TasksProvider>
+    );
 }

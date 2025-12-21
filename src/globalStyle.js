@@ -22,7 +22,6 @@ export function useStyles() {
                     fontFamily: "BrandFont-Bold",
                     fontSize: 24,
                     color: theme.fg,
-                    marginBottom: 8,
                 },
                 text: {
                     fontFamily: "BrandFont-Regular",
@@ -43,10 +42,11 @@ export function useStyles() {
                     borderRadius: 5,
                     backgroundColor: theme.accent1,
                     borderWidth: 1,
-                    borderColor: theme.accent1,
+                    borderColor: "transparent",
                 },
                 buttonPressed: {
                     backgroundColor: "transparent",
+                    borderColor: theme.accent1,
                 },
                 buttonDisabled: {
                     opacity: 0.5,

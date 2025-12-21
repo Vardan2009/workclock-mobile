@@ -6,7 +6,13 @@ import { useStyles } from "../../globalStyle";
 import { useState } from "react";
 import { Pressable } from "react-native";
 
-export default function ThemedButton({ children, onPress, disabled }) {
+export default function ThemedButton({
+    children,
+    onPress,
+    disabled,
+    style,
+    ...props
+}) {
     const styles = useStyles();
 
     const [isPressed, setIsPressed] = useState(false);
@@ -20,12 +26,14 @@ export default function ThemedButton({ children, onPress, disabled }) {
         <Pressable
             style={[
                 styles.button,
+                style,
                 (isPressed || disabled) && styles.buttonPressed,
                 disabled && styles.buttonDisabled,
             ]}
             onPress={onPressInternal}
             onPressIn={() => setIsPressed(true)}
             onPressOut={() => setIsPressed(false)}
+            {...props}
         >
             <ThemedText
                 style={[

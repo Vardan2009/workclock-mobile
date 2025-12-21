@@ -5,8 +5,6 @@ import WorkClockWhiteLogo from "../../assets/workclock-white.png";
 
 import ThemedView from "./styled/themedView";
 
-import ThemedText from "./styled/themedText";
-
 import { useAuth } from "../authCtx";
 
 import { LogoutButton } from "./logoutBtn";
@@ -31,7 +29,6 @@ export default function Header() {
             />
             {isAuthenticated && (
                 <>
-                    <ThemedText>username</ThemedText>
                     <LogoutButton />
                 </>
             )}

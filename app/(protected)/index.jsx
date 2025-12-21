@@ -9,51 +9,56 @@ import TaskCard from "../../src/components/taskCard";
 
 import { ScrollView } from "react-native";
 
+import { getUser } from "../../src/api/protected";
+
+import { useTasks } from "../../src/task";
+
+import { useEffect, useState } from "react";
+
 export default function HomeScreen() {
     const styles = useStyles();
 
+    const [user, setUser] = useState(null);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const u = await getUser();
+
+            if (u.error) setError(u.error);
+
+            setUser(u);
+        };
+        fetchData();
+    }, []);
+
+    const { tasks, loadTasks } = useTasks();
+
+    useEffect(() => {
+        loadTasks();
+    }, []);
+
     return (
-        <ThemedView style={styles.page}>
-            <ThemedText style={styles.title}>Hello, username!</ThemedText>
+        <>
+            {user && tasks && (
+                <ThemedView style={styles.page}>
+                    <ThemedText style={styles.title}>
+                        Hello, {user.username}!
+                    </ThemedText>
 
-            <ThemedText style={styles.subtitle}>Your tasks</ThemedText>
+                    <ThemedText style={styles.subtitle}>Your tasks</ThemedText>
 
-            <ScrollView>
-                {[
-                    {
-                        title: "Task 1",
-                        description: "Description for task 1",
-                    },
-                    {
-                        title: "Task 2",
-                        description: "Description for task 2",
-                    },
-                    {
-                        title: "Task 3",
-                        description: "Description for task 3",
-                    },
-                    {
-                        title: "Task 4",
-                        description: "Description for task 4",
-                    },
-                    {
-                        title: "Task 5",
-                        description: "Description for task 5",
-                    },
-                    {
-                        title: "Task 6",
-                        description: "Description for task 6",
-                    },
-                    {
-                        title: "Task 7",
-                        description: "Description for task 7",
-                    },
-                ].map((task, index) => (
-                    <TaskCard key={index} task={task} />
-                ))}
-            </ScrollView>
+                    <ScrollView>
+                        {tasks.map((task, index) => (
+                            <TaskCard key={index} task={task} />
+                        ))}
+                    </ScrollView>
 
-            <ThemeSelector />
-        </ThemedView>
+                    <ThemeSelector />
+                </ThemedView>
+            )}
+            {!(user && tasks) && <ThemedText>Please wait...</ThemedText>}
+            {error && <ThemedText>An error occured: {error}</ThemedText>}
+        </>
     );
 }
