@@ -97,7 +97,7 @@ export default function TaskDetail() {
                 Task Instances
             </ThemedText>
 
-            <ScrollView style={{ height: 500 }}>
+            <ScrollView style={{ maxHeight: 500 }}>
                 {task.taskInstances.toReversed().map((inst, i) => (
                     <ThemedView
                         key={i}
