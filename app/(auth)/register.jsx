@@ -2,7 +2,7 @@ import { register as apiRegister } from "../../src/api/auth";
 import { useAuth } from "../../src/authCtx";
 import { useRouter } from "expo-router";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { useStyles } from "../../src/globalStyle";
 
@@ -26,6 +26,8 @@ const formatString = (str) => {
 export default function Register() {
     const { theme } = useTheme();
 
+    const { isAuthenticated } = useAuth();
+
     const styles = useStyles();
 
     const router = useRouter();
@@ -36,6 +38,10 @@ export default function Register() {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
+    useEffect(() => {
+        if (isAuthenticated) router.replace("/(protected)");
+    }, [isAuthenticated]);
 
     const handleLogin = async () => {
         setLoginState(true);
