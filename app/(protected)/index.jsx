@@ -41,7 +41,7 @@ export default function HomeScreen() {
 
             fetchUserData();
             loadTasks();
-        }, []),
+        }, [])
     );
 
     // useEffect(() => {

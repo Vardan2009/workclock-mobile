@@ -17,8 +17,9 @@ export default function ProtectedLayout() {
             <Stack
                 screenOptions={{
                     headerShown: false,
-                    animation: "fade",
+                    animation: "fade_from_bottom",
                     gestureEnabled: false,
+                    animationDuration: 100,
                 }}
             ></Stack>
         </TasksProvider>
