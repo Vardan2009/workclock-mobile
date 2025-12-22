@@ -2,6 +2,7 @@ import ThemedText from "./styled/themedText";
 import ThemedView from "./styled/themedView";
 
 import ThemedButton from "./styled/themedButton";
+import ThemedPressable from "./styled/themedPressable";
 
 import { useStyles } from "../globalStyle";
 
@@ -14,8 +15,6 @@ import { useEffect, useState } from "react";
 import { useRef } from "react";
 
 import { router } from "expo-router";
-
-import { Pressable } from "react-native";
 
 import { formatSecondsToHMS } from "../util";
 
@@ -118,17 +117,19 @@ export default function TaskCard({ task }) {
                     justifyContent: "space-between",
                 }}
             >
-                <Pressable
+                <ThemedPressable
                     onPress={() => router.push(`/(protected)/task/${task.id}`)}
                 >
                     <ThemedText style={styles.subtitle}>
                         {task.icon} {task.title}
                     </ThemedText>
-                </Pressable>
+                </ThemedPressable>
                 <ThemedButton
                     onPress={handleDelete}
-                    disabled={beingDeleted}
-                    style={{ backgroundColor: theme.danger }}
+                    disabled={beingDeleted || running}
+                    style={{
+                        backgroundColor: theme.danger,
+                    }}
                 >
                     Delete
                 </ThemedButton>
@@ -150,6 +151,7 @@ export default function TaskCard({ task }) {
                     <ThemedButton
                         onPress={startNewInstance}
                         disabled={beingDeleted}
+                        style={{ marginTop: 30 }}
                     >
                         Start Tracking
                     </ThemedButton>
@@ -169,6 +171,7 @@ export default function TaskCard({ task }) {
                     <ThemedButton
                         onPress={stopInstance}
                         disabled={beingDeleted}
+                        style={{ backgroundColor: theme.danger, marginTop: 30 }}
                     >
                         Complete Task
                     </ThemedButton>

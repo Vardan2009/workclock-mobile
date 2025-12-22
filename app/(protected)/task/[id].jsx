@@ -14,12 +14,15 @@ import { router } from "expo-router";
 
 import { ScrollView } from "react-native";
 
+import { useTheme } from "../../../src/themeCtx";
+
 export default function TaskDetail() {
     const styles = useStyles();
 
     const params = useLocalSearchParams();
 
     const { tasks } = useTasks();
+    const { theme } = useTheme();
 
     const task = tasks.find((t) => t.id == params.id);
 
@@ -49,9 +52,16 @@ export default function TaskDetail() {
             </ThemedText>
 
             <ScrollView>
-                {task.taskInstances.map((inst, i) => (
+                {task.taskInstances.toReversed().map((inst, i) => (
                     <ThemedView key={i} style={{ marginVertical: 10 }}>
-                        <ThemedText>--- Instance {i + 1}</ThemedText>
+                        <ThemedText
+                            style={{
+                                fontFamily: "BrandFont-Bold",
+                                color: theme.accent1,
+                            }}
+                        >
+                            --- Instance {task.taskInstances.length - i}
+                        </ThemedText>
 
                         <ThemedText style={{ marginLeft: 30 }}>
                             Started{" "}
