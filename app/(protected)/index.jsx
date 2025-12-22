@@ -4,6 +4,7 @@ import ThemedView from "../../src/components/styled/themedView";
 import ThemedText from "../../src/components/styled/themedText";
 
 import ThemedButton from "../../src/components/styled/themedButton";
+import TimeSelectModal from "../../src/components/timeSelectModal";
 
 import TaskCard from "../../src/components/taskCard";
 
@@ -13,15 +14,15 @@ import { getUser } from "../../src/api/protected";
 
 import { useTasks } from "../../src/task";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 import { router } from "expo-router";
 
 import { useFocusEffect } from "expo-router";
 
-import { useCallback } from "react";
-
 import { Feather } from "@expo/vector-icons";
+
+import { usePromptDuration } from "../../src/components/promptDuration";
 
 export default function HomeScreen() {
     const styles = useStyles();
@@ -30,6 +31,8 @@ export default function HomeScreen() {
     const [error, setError] = useState(null);
 
     const { tasks, loadTasks } = useTasks();
+
+    const { promptDuration, modal } = usePromptDuration();
 
     useFocusEffect(
         useCallback(() => {
@@ -45,11 +48,6 @@ export default function HomeScreen() {
             loadTasks();
         }, [])
     );
-
-    // useEffect(() => {
-    //     fetchUserData();
-    //     loadTasks();
-    // }, []);
 
     return (
         <ThemedView style={styles.page}>
@@ -68,13 +66,19 @@ export default function HomeScreen() {
                     </ThemedButton>
                     <ScrollView>
                         {tasks.map((task) => (
-                            <TaskCard key={task.id} task={task} />
+                            <TaskCard
+                                promptDuration={promptDuration}
+                                key={task.id}
+                                task={task}
+                            />
                         ))}
                     </ScrollView>
                 </>
             )}
+
             {!(user && tasks) && <ThemedText>Please wait...</ThemedText>}
             {error && <ThemedText>An error occured: {error}</ThemedText>}
+            {modal}
         </ThemedView>
     );
 }

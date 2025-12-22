@@ -18,7 +18,7 @@ import { router } from "expo-router";
 
 import { formatSecondsToHMS } from "../util";
 
-export default function TaskCard({ task }) {
+export default function TaskCard({ task, promptDuration }) {
     const styles = useStyles();
     const { theme } = useTheme();
 
@@ -61,7 +61,7 @@ export default function TaskCard({ task }) {
     }, []);
 
     const startNewInstance = async () => {
-        const estTime = 10;
+        const estTime = await promptDuration();
 
         if (!isNaN(estTime) && estTime > 0) {
             await api.post(`/tasks/${task.id}/instances/start`, {
