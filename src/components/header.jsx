@@ -36,7 +36,7 @@ export default function Header() {
         >
             <StatusBar barStyle={useStyles().barStyle} />
 
-            <Pressable onPress={() => router.back()}>
+            <Pressable onPress={() => {if(router.canGoBack()) router.back()}}>
                 <Image
                     source={WorkClockWhiteLogo}
                     style={[styles.logo, { marginRight: 10 }]}
