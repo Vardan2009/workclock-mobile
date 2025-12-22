@@ -3,6 +3,8 @@ import { useStyles } from "../globalStyle";
 
 import WorkClockWhiteLogo from "../../assets/workclock-white.png";
 
+import ThemedPressable from "./styled/themedPressable";
+
 import ThemedView from "./styled/themedView";
 
 import { useAuth } from "../authCtx";
@@ -38,7 +40,7 @@ export default function Header() {
         >
             <StatusBar barStyle={useStyles().barStyle} />
 
-            <Pressable
+            <ThemedPressable
                 onPress={() => {
                     router.dismissTo(`/`);
                 }}
@@ -47,7 +49,7 @@ export default function Header() {
                     source={WorkClockWhiteLogo}
                     style={[styles.logo, { marginRight: 10 }]}
                 />
-            </Pressable>
+            </ThemedPressable>
 
             {isAuthenticated && !isLoading && (
                 <ThemedView
