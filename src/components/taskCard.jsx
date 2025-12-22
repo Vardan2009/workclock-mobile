@@ -118,6 +118,7 @@ export default function TaskCard({ task }) {
                 }}
             >
                 <ThemedPressable
+                    style={{ maxWidth: "70%" }}
                     onPress={() => router.push(`/(protected)/task/${task.id}`)}
                 >
                     <ThemedText style={styles.subtitle}>

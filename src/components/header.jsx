@@ -17,6 +17,8 @@ import { useRouter, usePathname } from "expo-router";
 
 import { Pressable } from "react-native";
 
+import { Feather } from "@expo/vector-icons";
+
 export default function Header() {
     const styles = useStyles();
 
@@ -36,7 +38,11 @@ export default function Header() {
         >
             <StatusBar barStyle={useStyles().barStyle} />
 
-            <Pressable onPress={() => {router.dismissTo(`/`)}}>
+            <Pressable
+                onPress={() => {
+                    router.dismissTo(`/`);
+                }}
+            >
                 <Image
                     source={WorkClockWhiteLogo}
                     style={[styles.logo, { marginRight: 10 }]}
@@ -44,15 +50,21 @@ export default function Header() {
             </Pressable>
 
             {isAuthenticated && !isLoading && (
-                <>
+                <ThemedView
+                    style={{
+                        flexDirection: "row",
+                        gap: 10,
+                    }}
+                >
                     <ThemedButton
+                        style={styles.buttonSquare}
                         disabled={pathname === "/settings"}
                         onPress={() => router.push(`/(protected)/settings`)}
                     >
-                        Settings
+                        <Feather name="settings" size={16} />
                     </ThemedButton>
                     <LogoutButton />
-                </>
+                </ThemedView>
             )}
         </ThemedView>
     );

@@ -9,6 +9,8 @@ import { useStyles } from "../../src/globalStyle";
 import ThemeSelector from "../../src/components/themeSelector";
 import ThemedButton from "../../src/components/styled/themedButton";
 
+import { Feather } from "@expo/vector-icons";
+
 export default function Settings() {
     const router = useRouter();
 
@@ -21,7 +23,9 @@ export default function Settings() {
             <ThemedText style={styles.subtitle}>Theme</ThemedText>
             <ThemeSelector />
 
-            <ThemedButton onPress={() => router.back()}>&lt; Back</ThemedButton>
+            <ThemedButton onPress={() => router.back()}>
+                <Feather name="arrow-left" size={16} /> Back
+            </ThemedButton>
         </ThemedView>
     );
 }

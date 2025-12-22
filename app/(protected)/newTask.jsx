@@ -13,6 +13,8 @@ import { router } from "expo-router";
 import { useState } from "react";
 import { api } from "../../src/api/client";
 
+import { Feather } from "@expo/vector-icons";
+
 export default function NewTaskPage() {
     const styles = useStyles();
     const { theme } = useTheme();
@@ -99,14 +101,14 @@ export default function NewTaskPage() {
                     textStyle={styles.buttonOutlineText}
                     onPress={() => router.back()}
                 >
-                    &lt; Back
+                    <Feather name="arrow-left" size={16} /> Back
                 </ThemedButton>
                 <ThemedButton
                     onPress={handleNew}
                     disabled={creating}
                     style={{ flex: 1, margin: 5 }}
                 >
-                    + New
+                    <Feather name="plus" size={16} /> Create
                 </ThemedButton>
             </ThemedView>
         </ThemedView>

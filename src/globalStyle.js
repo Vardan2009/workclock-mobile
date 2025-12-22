@@ -44,6 +44,14 @@ export function useStyles() {
                     borderWidth: 1,
                     borderColor: "transparent",
                 },
+                buttonSquare: {
+                    width: 40,
+                    height: 40,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    paddingVertical: 0,
+                    paddingHorizontal: 0,
+                },
                 buttonOutline: {
                     backgroundColor: "transparent",
                     borderColor: theme.accent1,
@@ -77,6 +85,6 @@ export function useStyles() {
                     color: theme.fg,
                 },
             }),
-        [theme],
+        [theme]
     );
 }

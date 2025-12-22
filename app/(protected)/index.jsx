@@ -13,13 +13,15 @@ import { getUser } from "../../src/api/protected";
 
 import { useTasks } from "../../src/task";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { router } from "expo-router";
 
 import { useFocusEffect } from "expo-router";
 
 import { useCallback } from "react";
+
+import { Feather } from "@expo/vector-icons";
 
 export default function HomeScreen() {
     const styles = useStyles();
@@ -62,7 +64,7 @@ export default function HomeScreen() {
                             router.push(`/(protected)/newTask`);
                         }}
                     >
-                        + New Task
+                        <Feather name="plus" size={16} /> New Task
                     </ThemedButton>
                     <ScrollView>
                         {tasks.map((task) => (
