@@ -8,10 +8,12 @@ import { useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import { useStyles } from "../globalStyle";
 
-export function LogoutButton() {
+import { useTheme } from "../themeCtx";
+
+export default function LogoutButton() {
     const { logout } = useAuth();
 
-    const styles = useStyles();
+    const { theme } = useTheme();
 
     const [loggingOut, setLogoutState] = useState(false);
 
@@ -23,10 +25,10 @@ export function LogoutButton() {
                 setLogoutState(false);
                 router.replace("/(auth)/login");
             }}
-            style={styles.buttonSquare}
+            style={{ backgroundColor: theme.danger }}
             disabled={loggingOut}
         >
-            <Feather style name="log-out" size={16} />
+            Log out <Feather style name="log-out" size={16} />
         </ThemedButton>
     );
 }

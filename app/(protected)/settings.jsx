@@ -32,7 +32,7 @@ export default function Settings() {
             </ThemedButton>
 
             <ThemedText style={{ marginTop: 100, opacity: 0.5 }}>
-                WorkClock version v0.1.0
+                WorkClock version v0.2.0
             </ThemedText>
 
             <ThemedPressable

@@ -9,15 +9,11 @@ import ThemedView from "./styled/themedView";
 
 import { useAuth } from "../authCtx";
 
-import { LogoutButton } from "./logoutBtn";
-
 import { StatusBar } from "react-native";
 
 import ThemedButton from "./styled/themedButton";
 
 import { useRouter, usePathname } from "expo-router";
-
-import { Pressable } from "react-native";
 
 import { Feather } from "@expo/vector-icons";
 
@@ -59,13 +55,19 @@ export default function Header() {
                     }}
                 >
                     <ThemedButton
-                        style={styles.buttonSquare}
+                        disabled={pathname === "/you"}
+                        onPress={() => router.push(`/(protected)/you`)}
+                    >
+                        <Feather name="user" size={16} onPress={() => {}} />
+                        {" You"}
+                    </ThemedButton>
+                    <ThemedButton
                         disabled={pathname === "/settings"}
                         onPress={() => router.push(`/(protected)/settings`)}
                     >
-                        <Feather name="settings" size={16} />
+                        <Feather name="settings" size={16} onPress={() => {}} />
+                        {" Settings"}
                     </ThemedButton>
-                    <LogoutButton />
                 </ThemedView>
             )}
         </ThemedView>
