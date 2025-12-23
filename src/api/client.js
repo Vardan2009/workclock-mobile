@@ -3,7 +3,7 @@ import * as SecureStore from "expo-secure-store";
 
 import { router } from "expo-router";
 
-const API_URL = "https://time-manager-app-backend.onrender.com";
+const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
 export const api = axios.create({
     baseURL: API_URL,
