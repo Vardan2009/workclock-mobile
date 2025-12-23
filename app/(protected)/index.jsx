@@ -10,11 +10,11 @@ import TaskCard from "../../src/components/taskCard";
 
 import { ScrollView } from "react-native";
 
-import { getUser } from "../../src/api/protected";
+import { useUserData } from "../../src/userDataCtx";
 
 import { useTasks } from "../../src/task";
 
-import { useState, useCallback } from "react";
+import { useCallback } from "react";
 
 import { router } from "expo-router";
 
@@ -27,34 +27,24 @@ import { usePromptDuration } from "../../src/components/promptDuration";
 export default function HomeScreen() {
     const styles = useStyles();
 
-    const [user, setUser] = useState(null);
-    const [error, setError] = useState(null);
-
+    const { userData, loadUserData } = useUserData();
     const { tasks, loadTasks } = useTasks();
 
     const { promptDuration, modal } = usePromptDuration();
 
     useFocusEffect(
         useCallback(() => {
-            const fetchUserData = async () => {
-                const u = await getUser();
-
-                if (u.error) setError(u.error);
-
-                setUser(u);
-            };
-
-            fetchUserData();
             loadTasks();
+            loadUserData();
         }, [])
     );
 
     return (
         <ThemedView style={styles.page}>
-            {user && tasks && (
+            {userData && tasks && (
                 <>
                     <ThemedText style={styles.title}>
-                        Hello, {user.username}!
+                        Hello, {userData.username}!
                     </ThemedText>
                     <ThemedText style={styles.subtitle}>Your tasks</ThemedText>
                     <ThemedButton
@@ -76,8 +66,7 @@ export default function HomeScreen() {
                 </>
             )}
 
-            {!(user && tasks) && <ThemedText>Please wait...</ThemedText>}
-            {error && <ThemedText>An error occured: {error}</ThemedText>}
+            {!(userData && tasks) && <ThemedText>Please wait...</ThemedText>}
             {modal}
         </ThemedView>
     );
